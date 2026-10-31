@@ -1,0 +1,19 @@
+RIFA SOLIDÁRIA MÁRCIA ELIZEU — ARQUIVOS ATUALIZADOS
+
+O ZIP contém index.html, styles.css e qrcode-pix.png.
+Mantenha app.js e firebase-config.js que já existem no seu repositório.
+
+FOTOS DOS PRÊMIOS:
+O index.html espera gargantilha.jpg e pijama.jpg na mesma pasta.
+Salve as fotos que você enviou com esses nomes e envie-as para a raiz do repositório.
+Se as fotos ainda não estiverem disponíveis com esses nomes, os espaços das fotos ficarão sem imagem.
+
+PUBLICAÇÃO:
+1. Abra o repositório no GitHub.
+2. Envie/substitua index.html, styles.css e qrcode-pix.png na pasta principal (raiz).
+3. Envie também gargantilha.jpg e pijama.jpg.
+4. Não apague app.js nem firebase-config.js.
+5. Clique em Commit changes e aguarde o GitHub Pages atualizar.
+
+ATENÇÃO:
+O QR Code enviado está no card do 2º prêmio como a imagem solicitada. Antes de instruir alguém a pagar por QR Code, confirme no aplicativo do banco se ele é o QR correto para receber a rifa. O botão de comprovante abre o WhatsApp da Márcia; o participante precisa anexar a imagem do comprovante manualmente.
