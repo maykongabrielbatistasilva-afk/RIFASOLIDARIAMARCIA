@@ -129,6 +129,8 @@
       const amountEl = document.getElementById('pix-amount');
       const qrContainer = document.getElementById('pix-qrcode');
       const hint = document.getElementById('pix-qr-hint');
+      let retainedReservationQuantity = 0;
+      let reservationSubmitted = false;
 
       function tlv(id, value) {
         const text = String(value);
@@ -174,7 +176,15 @@
       }
 
       function updatePix() {
-        const quantity = getSelectedNumbersCount();
+        const currentQuantity = getSelectedNumbersCount();
+        if (currentQuantity > 0) {
+          retainedReservationQuantity = currentQuantity;
+        }
+        // After a reservation is submitted, app.js may clear the selected
+        // numbers. Keep the last submitted quantity and its Pix total visible.
+        const quantity = currentQuantity > 0
+          ? currentQuantity
+          : (reservationSubmitted ? retainedReservationQuantity : 0);
         const amount = quantity * PRICE_PER_NUMBER;
         quantityEl.textContent = quantity + (quantity === 1 ? ' número' : ' números');
         amountEl.textContent = amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -211,7 +221,24 @@
 
       const observer = new MutationObserver(updatePix);
       if (selectedList) observer.observe(selectedList, { childList: true, characterData: true, subtree: true });
-      document.getElementById('clear-selection')?.addEventListener('click', () => setTimeout(updatePix, 0));
+
+      // Capture the quantity before the reservation handler clears the selection.
+      document.getElementById('reservation-form')?.addEventListener('submit', function () {
+        const quantity = getSelectedNumbersCount();
+        if (quantity > 0) {
+          retainedReservationQuantity = quantity;
+          reservationSubmitted = true;
+          updatePix();
+        }
+      }, true);
+
+      // Clearing manually before submitting also clears the displayed Pix total.
+      document.getElementById('clear-selection')?.addEventListener('click', function () {
+        if (!reservationSubmitted) {
+          retainedReservationQuantity = 0;
+        }
+        setTimeout(updatePix, 0);
+      });
       updatePix();
     })();
   </script>

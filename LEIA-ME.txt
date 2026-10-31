@@ -27,3 +27,8 @@ IMPORTANTE SOBRE O PIX:
 
 ATUALIZAÇÃO DO 3º PRÊMIO:
 - O texto deixa explícito que o prêmio é apenas 1 (um) pijama americano.
+
+CORREÇÃO DE PAGAMENTO APÓS RESERVA:
+- A seção de pagamento permanece visível mesmo depois de solicitar a reserva.
+- O valor e a quantidade selecionados são mantidos no painel Pix após o envio do formulário, mesmo se a lista visual de números for limpa pelo app.js.
+- Antes de enviar a reserva, o botão Limpar ainda limpa o valor exibido.

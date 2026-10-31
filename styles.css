@@ -20,3 +20,11 @@
 .pix-qr-box{min-width:0}
 .pix-qr-box p{margin:0;text-align:center}
 @media(max-width:700px){#pix-qrcode{min-height:220px}}
+
+/* A área de pagamento deve continuar visível após solicitar a reserva. */
+#pagamento,
+#pagamento.hidden {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
