@@ -1,19 +1,18 @@
 RIFA SOLIDÁRIA MÁRCIA ELIZEU — ARQUIVOS ATUALIZADOS
 
-O ZIP contém index.html, styles.css e qrcode-pix.png.
-Mantenha app.js e firebase-config.js que já existem no seu repositório.
+O pacote contém index.html, styles.css e qrcode-pix.png.
 
-FOTOS DOS PRÊMIOS:
-O index.html espera gargantilha.jpg e pijama.jpg na mesma pasta.
-Salve as fotos que você enviou com esses nomes e envie-as para a raiz do repositório.
-Se as fotos ainda não estiverem disponíveis com esses nomes, os espaços das fotos ficarão sem imagem.
+PUBLICAÇÃO NO GITHUB PAGES
+1. Abra o repositório GitHub do site.
+2. Envie/substitua os três arquivos acima na pasta raiz.
+3. Mantenha app.js e firebase-config.js existentes — eles não estão incluídos e não devem ser apagados.
+4. Mantenha gargantilha.jpg e pijama.jpg na raiz, pois o site continua usando essas fotos.
+5. Faça Commit changes e aguarde o GitHub Pages atualizar.
 
-PUBLICAÇÃO:
-1. Abra o repositório no GitHub.
-2. Envie/substitua index.html, styles.css e qrcode-pix.png na pasta principal (raiz).
-3. Envie também gargantilha.jpg e pijama.jpg.
-4. Não apague app.js nem firebase-config.js.
-5. Clique em Commit changes e aguarde o GitHub Pages atualizar.
+ALTERAÇÕES
+- Removida a menção a “pingente de coração”.
+- O segundo prêmio agora mostra um símbolo de dinheiro.
+- O QR Code Pix foi movido para a seção PAGAMENTO, junto da chave Pix.
+- O botão de comprovante abre o WhatsApp do número 77988530236.
 
-ATENÇÃO:
-O QR Code enviado está no card do 2º prêmio como a imagem solicitada. Antes de instruir alguém a pagar por QR Code, confirme no aplicativo do banco se ele é o QR correto para receber a rifa. O botão de comprovante abre o WhatsApp da Márcia; o participante precisa anexar a imagem do comprovante manualmente.
+IMPORTANTE: antes de divulgar o QR Code, confirme no aplicativo do banco se ele corresponde à chave Pix e à conta que receberá os pagamentos.
