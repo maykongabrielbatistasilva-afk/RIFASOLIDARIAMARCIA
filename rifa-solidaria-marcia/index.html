@@ -9,21 +9,34 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <span class="eyebrow">AÇÃO SOLIDÁRIA</span>
-      <h1>Rifa Solidária<br><span>Márcia Elizeu</span></h1>
-      <p>Ajude Márcia a realizar sua cirurgia de catarata. Cada número é um gesto de carinho e solidariedade.</p>
-      <a class="button button-light" href="#numeros">Escolher meus números</a>
-    </div>
-  </header>
-
+  <header class="hero"><div class="hero-inner">
+    <span class="eyebrow">AÇÃO SOLIDÁRIA</span>
+    <h1>Rifa Solidária<br><span>Márcia Elizeu</span></h1>
+    <p>Ajude Márcia a realizar sua cirurgia de catarata. Participe, concorra a prêmios e espalhe solidariedade!</p>
+    <a class="button button-light" href="#numeros">Escolher meus números</a>
+  </div></header>
   <main class="container">
-    <section class="notice">
-      <div class="notice-icon" aria-hidden="true">♡</div>
-      <div>
-        <h2>Vamos ajudar a Márcia?</h2>
-        <p>Escolha um ou mais números de 001 a 500. Depois de enviar sua solicitação, aguarde a confirmação manual do pagamento via Pix pelo responsável pela rifa.</p>
+    <section class="notice"><div class="notice-icon" aria-hidden="true">♡</div><div>
+      <h2>Vamos ajudar a Márcia?</h2>
+      <p>Escolha um ou mais números de 001 a 500. Cada número custa R$ 30,00. Após solicitar a reserva, faça o Pix e envie o comprovante pelo WhatsApp para a Márcia.</p>
+    </div></section>
+
+    <section class="panel prizes-panel" id="premios">
+      <span class="eyebrow">PRÊMIOS</span><h2>Participe e concorra!</h2>
+      <div class="prize-grid">
+        <article class="prize-card">
+          <img class="prize-image" src="gargantilha.jpg" alt="Gargantilha dourada">
+          <span class="prize-place">1º PRÊMIO</span><h3>Gargantilha ouro 18k</h3><p>Gargantilha ouro 18k.</p>
+        </article>
+        <article class="prize-card">
+          <div class="prize-image money-prize" role="img" aria-label="Símbolo de dinheiro">R$</div>
+          <span class="prize-place">2º PRÊMIO</span><h3>R$ 500,00 no Pix</h3><p>Prêmio de quinhentos reais via Pix.</p>
+          
+        </article>
+        <article class="prize-card">
+          <img class="prize-image" src="pijama.jpg" alt="Pijama americano branco com estampa de borboletas azuis">
+          <span class="prize-place">3º PRÊMIO</span><h3>Pijama americano</h3><p>Conjunto de pijama americano conforme a foto divulgada.</p>
+        </article>
       </div>
     </section>
 
@@ -34,79 +47,68 @@
     </section>
 
     <section id="numeros" class="panel">
-      <div class="section-heading">
-        <div><span class="eyebrow">PARTICIPE</span><h2>Escolha seus números</h2></div>
+      <div class="section-heading"><div><span class="eyebrow">PARTICIPE</span><h2>Escolha seus números</h2></div>
         <input id="search-number" type="search" inputmode="numeric" placeholder="Buscar número" aria-label="Buscar número">
       </div>
-      <div class="legend">
-        <span><i class="dot available"></i> Disponível</span>
-        <span><i class="dot reserved"></i> Reservado</span>
-        <span><i class="dot paid"></i> Confirmado</span>
-        <span><i class="dot selected"></i> Selecionado</span>
-      </div>
+      <div class="legend"><span><i class="dot available"></i> Disponível</span><span><i class="dot reserved"></i> Reservado</span><span><i class="dot paid"></i> Confirmado</span><span><i class="dot selected"></i> Selecionado</span></div>
       <p id="loading-message" class="muted">Conectando à lista de números…</p>
       <div id="number-grid" class="number-grid" aria-label="Números da rifa"></div>
-      <div class="selection-bar">
-        <div><span class="muted">Selecionados</span><strong id="selected-list">Nenhum</strong></div>
-        <button id="clear-selection" class="button button-outline" type="button">Limpar</button>
-      </div>
+      <div class="selection-bar"><div><span class="muted">Selecionados</span><strong id="selected-list">Nenhum</strong></div><button id="clear-selection" class="button button-outline" type="button">Limpar</button></div>
     </section>
 
     <section class="panel">
-      <span class="eyebrow">PRÓXIMO PASSO</span>
-      <h2>Solicitar reserva</h2>
+      <span class="eyebrow">PRÓXIMO PASSO</span><h2>Solicitar reserva</h2>
       <p class="muted">Preencha seus dados para enviar a solicitação. O número só ficará reservado se ainda estiver disponível.</p>
       <form id="reservation-form">
         <div class="form-grid">
-          <label>Seu nome
-            <input id="participant-name" name="name" autocomplete="name" required maxlength="80" placeholder="Nome completo">
-          </label>
-          <label>WhatsApp
-            <input id="participant-phone" name="phone" autocomplete="tel" required maxlength="25" placeholder="(00) 00000-0000">
-          </label>
+          <label>Seu nome<input id="participant-name" name="name" autocomplete="name" required maxlength="80" placeholder="Nome completo"></label>
+          <label>WhatsApp<input id="participant-phone" name="phone" autocomplete="tel" required maxlength="25" placeholder="(00) 00000-0000"></label>
         </div>
-        <label>Mensagem (opcional)
-          <textarea id="participant-message" name="message" maxlength="250" rows="2" placeholder="Se quiser, deixe uma mensagem para a Márcia"></textarea>
-        </label>
+        <label>Mensagem (opcional)<textarea id="participant-message" name="message" maxlength="250" rows="2" placeholder="Se quiser, deixe uma mensagem para a Márcia"></textarea></label>
         <p id="form-message" class="form-message" role="status"></p>
         <button id="submit-reservation" class="button button-primary" type="submit">Enviar solicitação de reserva</button>
       </form>
-      <div class="pix-note">
-        <strong>Pagamento via Pix</strong>
-        <p>Após solicitar a reserva, combine o pagamento diretamente com o responsável pela rifa. O pagamento será confirmado manualmente pelo gerente. Insira a chave Pix e o valor da rifa aqui antes de divulgar o site.</p>
-      </div>
+    </section>
+
+    <section class="panel payment-panel" id="pagamento">
+      <span class="eyebrow">PAGAMENTO</span><h2>Pague pelo Pix</h2>
+      <p>Após solicitar a reserva, transfira o valor correspondente aos seus números. O valor é de <strong>R$ 30,00 por número</strong>.</p>
+      <div class="pix-payment-content"><div class="pix-key-box"><span class="muted">Chave Pix (e-mail)</span><strong id="pix-key">maykongabrielbatistasilva@gmail.com</strong><button class="button button-outline" id="copy-pix-button" type="button">Copiar chave Pix</button></div><div class="pix-qr-box"><span class="muted">Pague também pelo QR Code Pix</span><img class="payment-qr" src="qrcode-pix.png" alt="QR Code para pagamento via Pix"></div></div>
+      <p class="payment-warning">Confira o nome do destinatário no aplicativo do banco antes de confirmar o pagamento. A reserva será confirmada manualmente após a verificação do pagamento.</p>
+      <a class="button button-primary whatsapp-button" href="https://wa.me/5577988530236?text=Ol%C3%A1%2C%20M%C3%A1rcia!%20Participei%20da%20Rifa%20Solid%C3%A1ria%20e%20vou%20enviar%20o%20comprovante%20do%20Pix." target="_blank" rel="noopener noreferrer">Enviar comprovante pelo WhatsApp</a>
+      <p class="muted">O botão abre a conversa com a Márcia. Anexe o comprovante de pagamento no WhatsApp antes de enviar.</p>
     </section>
 
     <section id="manager" class="panel manager-panel">
-      <span class="eyebrow">ACESSO RESTRITO</span>
-      <h2>Painel do gerente</h2>
+      <span class="eyebrow">ACESSO RESTRITO</span><h2>Painel do gerente</h2>
       <p class="muted">Entre com a conta autorizada para gerenciar as reservas e confirmar pagamentos.</p>
       <form id="login-form" class="login-form">
         <label>E-mail do gerente<input id="manager-email" type="email" required autocomplete="username"></label>
         <label>Senha<input id="manager-password" type="password" required autocomplete="current-password"></label>
-        <button class="button button-primary" type="submit">Entrar</button>
-        <button id="logout-button" class="button button-outline hidden" type="button">Sair</button>
+        <button class="button button-primary" type="submit">Entrar</button><button id="logout-button" class="button button-outline hidden" type="button">Sair</button>
       </form>
       <p id="manager-message" class="form-message" role="status"></p>
       <div id="manager-tools" class="hidden">
-        <div class="manager-reserve">
-          <h3>Reservar número manualmente</h3>
+        <div class="manager-reserve"><h3>Reservar número manualmente</h3>
           <label>Número (1–500)<input id="manual-number" type="number" min="1" max="500" step="1"></label>
           <label>Nome / observação<input id="manual-name" maxlength="80" placeholder="Nome da pessoa (opcional)"></label>
           <button id="manual-reserve-button" class="button button-primary" type="button">Reservar número</button>
         </div>
-        <h3>Reservas e pagamentos</h3>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Nº</th><th>Participante</th><th>WhatsApp</th><th>Status</th><th>Ações</th></tr></thead>
-            <tbody id="manager-table"><tr><td colspan="5">Nenhuma reserva.</td></tr></tbody>
-          </table>
-        </div>
+        <h3>Reservas e pagamentos</h3><div class="table-wrap"><table>
+          <thead><tr><th>Nº</th><th>Participante</th><th>WhatsApp</th><th>Status</th><th>Ações</th></tr></thead>
+          <tbody id="manager-table"><tr><td colspan="5">Nenhuma reserva.</td></tr></tbody>
+        </table></div>
       </div>
     </section>
   </main>
-
   <footer><p>Rifa Solidária Márcia Elizeu · Feita com solidariedade 💚</p></footer>
+  <script>
+    document.getElementById('copy-pix-button').addEventListener('click', async function () {
+      const key = document.getElementById('pix-key').textContent.trim();
+      try { await navigator.clipboard.writeText(key); this.textContent = 'Chave Pix copiada!'; }
+      catch (error) { window.prompt('Copie a chave Pix:', key); }
+    });
+  </script>
   <script type="module" src="app.js"></script>
 </body>
 </html>
