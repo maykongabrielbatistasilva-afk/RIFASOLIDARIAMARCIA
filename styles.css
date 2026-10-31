@@ -28,3 +28,19 @@
   visibility: visible !important;
   opacity: 1 !important;
 }
+
+
+/* Aviso obrigatório entre pagamento e solicitação de reserva */
+.reservation-alert {
+  margin: 22px 0;
+  padding: 18px 20px;
+  border: 2px solid #b91c1c;
+  border-left-width: 7px;
+  border-radius: 12px;
+  background: #fef2f2;
+  color: #991b1b;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.5;
+  letter-spacing: .02em;
+}
