@@ -177,14 +177,14 @@
 
       function updatePix() {
         const currentQuantity = getSelectedNumbersCount();
-        if (currentQuantity > 0) {
+        if (!reservationSubmitted && currentQuantity > 0) {
           retainedReservationQuantity = currentQuantity;
         }
-        // After a reservation is submitted, app.js may clear the selected
-        // numbers. Keep the last submitted quantity and its Pix total visible.
-        const quantity = currentQuantity > 0
-          ? currentQuantity
-          : (reservationSubmitted ? retainedReservationQuantity : 0);
+        // Once the reservation result arrives, keep the count of numbers
+        // actually committed in Firebase, even after app.js clears selection.
+        const quantity = reservationSubmitted
+          ? retainedReservationQuantity
+          : currentQuantity;
         const amount = quantity * PRICE_PER_NUMBER;
         quantityEl.textContent = quantity + (quantity === 1 ? ' número' : ' números');
         amountEl.textContent = amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -222,21 +222,42 @@
       const observer = new MutationObserver(updatePix);
       if (selectedList) observer.observe(selectedList, { childList: true, characterData: true, subtree: true });
 
-      // Capture the quantity before the reservation handler clears the selection.
-      document.getElementById('reservation-form')?.addEventListener('submit', function () {
-        const quantity = getSelectedNumbersCount();
-        if (quantity > 0) {
-          retainedReservationQuantity = quantity;
+      // app.js dispatches this event only after Firebase reports which numbers
+      // were actually reserved. Use that exact list for the Pix amount.
+      document.addEventListener('raffle:reservation-complete', function (event) {
+        const reservedNumbers = Array.isArray(event.detail?.reservedNumbers)
+          ? event.detail.reservedNumbers
+          : [];
+        if (reservedNumbers.length > 0) {
+          retainedReservationQuantity = reservedNumbers.length;
           reservationSubmitted = true;
           updatePix();
-        }
-      }, true);
-
-      // Clearing manually before submitting also clears the displayed Pix total.
-      document.getElementById('clear-selection')?.addEventListener('click', function () {
-        if (!reservationSubmitted) {
+          hint.textContent = 'Pix calculado para ' + reservedNumbers.length +
+            (reservedNumbers.length === 1 ? ' número reservado' : ' números reservados') +
+            '. Confira o valor e o destinatário no banco antes de pagar.';
+        } else {
+          reservationSubmitted = false;
           retainedReservationQuantity = 0;
+          updatePix();
         }
+      });
+
+      // If the participant starts a new selection after a previous reservation,
+      // calculate a fresh total from the newly selected numbers.
+      const numberGrid = document.getElementById('number-grid');
+      numberGrid?.addEventListener('click', function () {
+        setTimeout(function () {
+          if (getSelectedNumbersCount() > 0) {
+            reservationSubmitted = false;
+            updatePix();
+          }
+        }, 0);
+      });
+
+      // Clearing manually clears the current Pix amount.
+      document.getElementById('clear-selection')?.addEventListener('click', function () {
+        reservationSubmitted = false;
+        retainedReservationQuantity = 0;
         setTimeout(updatePix, 0);
       });
       updatePix();

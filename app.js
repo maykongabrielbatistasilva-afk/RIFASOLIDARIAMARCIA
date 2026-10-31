@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getDatabase, ref, onValue, runTransaction, set, remove, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+import { getDatabase, ref, onValue, runTransaction, set, remove } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { firebaseConfig, MANAGER_UID, PIX_KEY, RAFFLE_PRICE } from "./firebase-config.js";
 
@@ -67,7 +67,7 @@ function renderManagerTable() {
     const actions=document.createElement("td"),wrap=document.createElement("div");wrap.className="action-buttons";
     if(item.status!=="paid") { const paid=document.createElement("button");paid.className="button button-primary";paid.textContent="Confirmar Pix";paid.onclick=()=>managerSetStatus(key,{...item,status:"paid",paidAt:Date.now()});wrap.append(paid); }
     const release=document.createElement("button");release.className="button button-outline";release.textContent="Liberar";release.onclick=async()=>{if(confirm(`Liberar o número ${key}?`)){try{await remove(ref(db,`numbers/${key}`));selected.delete(Number(key));setMessage(managerMessage,`Número ${key} liberado.`)}catch(e){setMessage(managerMessage,e.message,true)}}};wrap.append(release);
-    actions.append(wrap);tr.append(actions);tbody.append(tr);
+    actions.append(wrap);tr.append(actions);
   }
 }
 async function managerSetStatus(key, value) {
@@ -121,13 +121,25 @@ $("reservation-form").addEventListener("submit",async e=>{
     for(const n of numbers) {
       if(await reservePublicNumber(n,participant)) reserved.push(n); else failed.push(n);
     }
+
+    // Notify the Pix panel with the exact numbers successfully reserved,
+    // before clearing the selection state.
+    document.dispatchEvent(new CustomEvent("raffle:reservation-complete", {
+      detail: { reservedNumbers: reserved.slice(), failedNumbers: failed.slice() }
+    }));
+
     selected.clear();updateSelection();drawNumbers();
     let msg=reserved.length?`Solicitação enviada para: ${reserved.map(n=>String(n).padStart(3,"0")).join(", ")}. Aguarde o gerente confirmar o Pix.`:"Nenhum número foi reservado.";
     if(failed.length)msg+=` Já estavam ocupados: ${failed.join(", ")}.`;
     if(PIX_KEY&&!PIX_KEY.includes("COLOQUE"))msg+=` Chave Pix informada pelo responsável: ${PIX_KEY}. Valor por número: ${RAFFLE_PRICE}.`;
     setMessage(formMessage,msg,failed.length===numbers.length);
     if(reserved.length)e.target.reset();
-  } catch(err){setMessage(formMessage,`Erro ao solicitar reserva: ${err.message}`,true);}
+  } catch(err){
+    setMessage(formMessage,`Erro ao solicitar reserva: ${err.message}`,true);
+    document.dispatchEvent(new CustomEvent("raffle:reservation-complete", {
+      detail: { reservedNumbers: reserved.slice(), failedNumbers: failed.slice() }
+    }));
+  }
   finally{$("submit-reservation").disabled=false;}
 });
 $("login-form").addEventListener("submit",async e=>{

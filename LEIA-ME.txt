@@ -32,3 +32,9 @@ CORREÇÃO DE PAGAMENTO APÓS RESERVA:
 - A seção de pagamento permanece visível mesmo depois de solicitar a reserva.
 - O valor e a quantidade selecionados são mantidos no painel Pix após o envio do formulário, mesmo se a lista visual de números for limpa pelo app.js.
 - Antes de enviar a reserva, o botão Limpar ainda limpa o valor exibido.
+
+CORREÇÃO DE CÁLCULO APÓS ENVIO DA RESERVA:
+- O app.js agora comunica ao painel Pix a lista exata de números que o Firebase reservou com sucesso.
+- O QR Code e o total passam a refletir somente os números efetivamente reservados.
+- Se algum número já estiver ocupado, ele não entra no total a pagar.
+- Envie também o app.js atualizado para a raiz do repositório GitHub.
