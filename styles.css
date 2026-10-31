@@ -4,9 +4,19 @@
 @media(max-width:700px){.hero{padding:48px 20px 65px}.number-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.number{padding:11px 0}.form-grid,.login-form{grid-template-columns:1fr}.login-form .button{width:100%}.stats{gap:8px}.stat{padding:13px 5px}.stat strong{font-size:1.5rem}.notice{padding:17px}.section-heading input{max-width:none;width:100%}.selection-bar{align-items:flex-start}.hero p{font-size:1rem}.prize-grid{grid-template-columns:1fr}.prize-image{height:250px}}
 
 /* Ajustes: prêmio em dinheiro e QR Code na área de pagamento */
-.money-prize{display:grid;place-items:center;background:linear-gradient(145deg,#14532d,#16a34a);color:#fff;font-size:5rem;font-weight:900;letter-spacing:-.08em}
+
 .pix-payment-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.75fr);gap:16px;align-items:stretch;margin:16px 0}
 .pix-payment-content .pix-key-box{height:100%}
 .pix-qr-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;background:#fff;border:1px solid var(--line);border-radius:12px;text-align:center}
 .payment-qr{display:block;width:min(100%,260px);height:auto;image-rendering:pixelated}
-@media(max-width:700px){.pix-payment-content{grid-template-columns:1fr}.money-prize{height:250px}}
+@media(max-width:700px){.pix-payment-content{grid-template-columns:1fr}}
+
+/* Pix com valor variável conforme a quantidade de números selecionados */
+.prize-logo{object-fit:contain;padding:18px;background:#fff}
+.pix-total-box{display:grid;grid-template-columns:1fr auto;gap:4px 14px;width:100%;padding-top:12px;border-top:1px solid var(--line)}
+.pix-total-box strong{color:var(--green);text-align:right}
+#pix-qrcode{display:flex;align-items:center;justify-content:center;min-height:220px;width:100%}
+#pix-qrcode img,#pix-qrcode canvas{max-width:100%;height:auto!important}
+.pix-qr-box{min-width:0}
+.pix-qr-box p{margin:0;text-align:center}
+@media(max-width:700px){#pix-qrcode{min-height:220px}}
