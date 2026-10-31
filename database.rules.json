@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "numbers": {
+      ".read": true,
+      "$number": {
+        ".write": "auth != null && auth.uid === 'COLOQUE_O_UID_DO_GERENTE' || (!data.exists() && newData.child('status').val() === 'reserved' && newData.child('number').val() == $number.toInt() && newData.child('name').isString() && newData.child('name').val().length > 0 && newData.child('name').val().length <= 80 && newData.child('phone').isString() && newData.child('phone').val().length > 0 && newData.child('phone').val().length <= 25 && newData.child('message').isString() && newData.child('message').val().length <= 250 && $number.matches(/^[1-9][0-9]{0,2}$/) && $number.toInt() >= 1 && $number.toInt() <= 500)",
+        ".validate": "newData.hasChildren(['number','status','name','phone']) && (newData.child('status').val() === 'reserved' || (auth != null && auth.uid === 'COLOQUE_O_UID_DO_GERENTE' && newData.child('status').val() === 'paid'))"
+      }
+    }
+  }
+}
