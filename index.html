@@ -18,7 +18,7 @@
   <main class="container">
     <section class="notice"><div class="notice-icon" aria-hidden="true">♡</div><div>
       <h2>Vamos ajudar a Márcia?</h2>
-      <p>Escolha um ou mais números de 001 a 500. Cada número custa R$ 30,00. Escolha seus números, realize o pagamento via Pix e envie o comprovante pelo WhatsApp antes de solicitar a reserva.</p>
+      <p>Escolha um ou mais números de 001 a 500. Cada número custa R$ 30,00. Após solicitar a reserva, faça o Pix e envie o comprovante pelo WhatsApp para a Márcia.</p>
     </div></section>
 
     <section class="panel prizes-panel" id="premios">
@@ -53,7 +53,24 @@
       <div class="legend"><span><i class="dot available"></i> Disponível</span><span><i class="dot reserved"></i> Reservado</span><span><i class="dot paid"></i> Confirmado</span><span><i class="dot selected"></i> Selecionado</span></div>
       <p id="loading-message" class="muted">Conectando à lista de números…</p>
       <div id="number-grid" class="number-grid" aria-label="Números da rifa"></div>
-      <div class="selection-bar"><div><span class="muted">Selecionados</span><strong id="selected-list">Nenhum</strong></div><button id="clear-selection" class="button button-outline" type="button">Limpar</bu    <section class="panel payment-panel" id="pagamento">
+      <div class="selection-bar"><div><span class="muted">Selecionados</span><strong id="selected-list">Nenhum</strong></div><button id="clear-selection" class="button button-outline" type="button">Limpar</button></div>
+    </section>
+
+    <section class="panel">
+      <span class="eyebrow">PRÓXIMO PASSO</span><h2>Solicitar reserva</h2>
+      <p class="muted">Preencha seus dados para enviar a solicitação. O número só ficará reservado se ainda estiver disponível.</p>
+      <form id="reservation-form">
+        <div class="form-grid">
+          <label>Seu nome<input id="participant-name" name="name" autocomplete="name" required maxlength="80" placeholder="Nome completo"></label>
+          <label>WhatsApp<input id="participant-phone" name="phone" autocomplete="tel" required maxlength="25" placeholder="(00) 00000-0000"></label>
+        </div>
+        <label>Mensagem (opcional)<textarea id="participant-message" name="message" maxlength="250" rows="2" placeholder="Se quiser, deixe uma mensagem para a Márcia"></textarea></label>
+        <p id="form-message" class="form-message" role="status"></p>
+        <button id="submit-reservation" class="button button-primary" type="submit">Enviar solicitação de reserva</button>
+      </form>
+    </section>
+
+    <section class="panel payment-panel" id="pagamento">
       <span class="eyebrow">PAGAMENTO</span><h2>Pague pelo Pix</h2>
       <p>Selecione seus números para o QR Code gerar automaticamente o valor correto. Cada número custa <strong>R$ 30,00</strong>.</p>
       <div class="pix-payment-content">
@@ -75,27 +92,6 @@
       <p class="payment-warning">Confira o nome do destinatário no aplicativo do banco antes de confirmar o pagamento. A reserva será confirmada manualmente após a verificação do pagamento.</p>
       <a class="button button-primary whatsapp-button" href="https://wa.me/5577988530236?text=Ol%C3%A1%2C%20M%C3%A1rcia!%20Participei%20da%20Rifa%20Solid%C3%A1ria%20e%20vou%20enviar%20o%20comprovante%20do%20Pix." target="_blank" rel="noopener noreferrer">Enviar comprovante pelo WhatsApp</a>
       <p class="muted">O botão abre a conversa com a Márcia. Anexe o comprovante de pagamento no WhatsApp antes de enviar.</p>
-    </section>
-
-    <div class="reservation-alert" role="alert">
-      REALIZE O PAGAMENTO E O ENVIO DO COMPROVANTE PRIMEIRO ANTES DE REALIZAR A RESERVA.
-    </div>
-
-    <section class="panel">
-      <span class="eyebrow">PRÓXIMO PASSO</span><h2>Solicitar reserva</h2>
-      <p class="muted">Preencha seus dados para enviar a solicitação. O número só ficará reservado se ainda estiver disponível.</p>
-      <form id="reservation-form">
-        <div class="form-grid">
-          <label>Seu nome<input id="participant-name" name="name" autocomplete="name" required maxlength="80" placeholder="Nome completo"></label>
-          <label>WhatsApp<input id="participant-phone" name="phone" autocomplete="tel" required maxlength="25" placeholder="(00) 00000-0000"></label>
-        </div>
-        <label>Mensagem (opcional)<textarea id="participant-message" name="message" maxlength="250" rows="2" placeholder="Se quiser, deixe uma mensagem para a Márcia"></textarea></label>
-        <p id="form-message" class="form-message" role="status"></p>
-        <button id="submit-reservation" class="button button-primary" type="submit">Enviar solicitação de reserva</button>
-      </form>
-    </section>
-
-enviar.</p>
     </section>
 
     <section id="manager" class="panel manager-panel">
