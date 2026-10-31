@@ -109,7 +109,24 @@
           <label>Nome / observação<input id="manual-name" maxlength="80" placeholder="Nome da pessoa (opcional)"></label>
           <button id="manual-reserve-button" class="button button-primary" type="button">Reservar número</button>
         </div>
-        <h3>Reservas e pagamentos</h3><div class="table-wrap"><table>
+        <h3>Reservas e pagamentos</h3>
+        <div class="manager-summary">
+          <div><strong id="manager-total-count">0</strong><span>Registros</span></div>
+          <div><strong id="manager-reserved-count">0</strong><span>Reservados</span></div>
+          <div><strong id="manager-paid-count">0</strong><span>Confirmados</span></div>
+        </div>
+        <div class="manager-filters">
+          <label>Buscar reserva<input id="manager-search" type="search" placeholder="Número, nome ou WhatsApp"></label>
+          <label>Filtrar por status
+            <select id="manager-filter">
+              <option value="all">Todos</option>
+              <option value="reserved">Reservados</option>
+              <option value="paid">Confirmados</option>
+            </select>
+          </label>
+        </div>
+        <p class="muted small-note">Use “Liberar número” para remover o registro do Firebase e disponibilizar o número novamente.</p>
+        <div class="table-wrap"><table>
           <thead><tr><th>Nº</th><th>Participante</th><th>WhatsApp</th><th>Status</th><th>Ações</th></tr></thead>
           <tbody id="manager-table"><tr><td colspan="5">Nenhuma reserva.</td></tr></tbody>
         </table></div>

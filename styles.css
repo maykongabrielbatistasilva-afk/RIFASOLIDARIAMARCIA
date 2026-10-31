@@ -28,3 +28,13 @@
   visibility: visible !important;
   opacity: 1 !important;
 }
+
+/* Painel do gerente: resumo, filtros e tabela */
+.manager-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.manager-summary>div{padding:13px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;text-align:center}
+.manager-summary strong{display:block;color:var(--green);font-size:1.45rem}
+.manager-summary span{font-size:.82rem;color:var(--muted)}
+.manager-filters{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.manager-filters label{display:flex;flex-direction:column;gap:7px;font-size:.9rem;font-weight:700}
+.manager-filters select{width:100%;padding:12px;border:1px solid #cbd5ce;border-radius:9px;background:#fff;color:var(--ink);font:inherit}
+@media(max-width:700px){.manager-filters{grid-template-columns:1fr}.manager-summary{gap:6px}.manager-summary>div{padding:10px 4px}}

@@ -1,0 +1,29 @@
+ATUALIZAÇÃO DO PAINEL DO GERENTE — RIFA SOLIDÁRIA MÁRCIA ELIZEU
+
+Arquivos atualizados:
+- app.js
+- index.html
+- styles.css
+
+O que foi adicionado:
+- Resumo de registros, números reservados e pagamentos confirmados.
+- Busca por número, participante ou WhatsApp.
+- Filtro por reservas e pagamentos confirmados.
+- Ação "Liberar número": remove numbers/<numero> do Realtime Database e deixa o número disponível novamente.
+- Mensagens mais claras quando o Firebase recusa a leitura dos dados.
+
+COMO PUBLICAR NO GITHUB PAGES:
+1. Faça backup dos arquivos atuais.
+2. Substitua app.js, index.html e styles.css na raiz do repositório.
+3. NÃO apague firebase-config.js, gargantilha.jpg, pijama.jpg ou logo-segundo-premio.png.
+4. Faça commit das alterações e aguarde o GitHub Pages atualizar.
+
+IMPORTANTE:
+O arquivo firebase-config.js não foi enviado nesta conversa, então não foi possível validar as credenciais, o MANAGER_UID ou as regras do Realtime Database.
+Se o painel continuar sem mostrar os registros:
+- Confira se firebase-config.js está na mesma pasta de app.js e exporta firebaseConfig, MANAGER_UID, PIX_KEY e RAFFLE_PRICE.
+- Confirme se MANAGER_UID é exatamente o UID da conta autorizada no Firebase Authentication.
+- Confira as regras do Realtime Database: a conta gerente precisa ter permissão de leitura e escrita em /numbers.
+- O login precisa usar a conta autorizada; apenas entrar com outro e-mail não libera o painel.
+
+A ação "Liberar número" remove o registro daquele número do banco. Assim, ele volta a aparecer como disponível para os participantes.

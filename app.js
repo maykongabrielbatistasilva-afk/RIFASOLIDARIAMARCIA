@@ -56,18 +56,90 @@ function updateSelection() {
   $("selected-list").textContent=selected.size ? [...selected].sort((a,b)=>a-b).map(n=>String(n).padStart(3,"0")).join(", ") : "Nenhum";
 }
 function renderManagerTable() {
-  const tbody=$("manager-table"); tbody.replaceChildren();
-  const entries=Object.entries(numberData).sort((a,b)=>Number(a[0])-Number(b[0]));
-  if (!entries.length) { const tr=document.createElement("tr"),td=document.createElement("td"); td.colSpan=5;td.textContent="Nenhuma reserva.";tr.append(td);tbody.append(tr);return; }
-  for (const [key,item] of entries) {
-    const tr=document.createElement("tr");
-    for (const value of [String(key).padStart(3,"0"),item.name||"—",item.phone||"—",statusLabel(item)]) {
-      const td=document.createElement("td"); td.textContent=value; tr.append(td);
+  const tbody = $("manager-table");
+  if (!tbody) return;
+  tbody.replaceChildren();
+
+  const search = ($("manager-search")?.value || "").trim().toLowerCase();
+  const filter = $("manager-filter")?.value || "all";
+  const entries = Object.entries(numberData)
+    .filter(([, item]) => item && (item.status === "reserved" || item.status === "paid"))
+    .sort((a, b) => Number(a[0]) - Number(b[0]))
+    .filter(([key, item]) => {
+      const matchesFilter = filter === "all" || item.status === filter;
+      const haystack = `${key} ${item.name || ""} ${item.phone || ""}`.toLowerCase();
+      return matchesFilter && haystack.includes(search);
+    });
+
+  const allEntries = Object.entries(numberData).filter(([, item]) => item);
+  const reserved = allEntries.filter(([, item]) => item?.status === "reserved").length;
+  const paid = allEntries.filter(([, item]) => item?.status === "paid").length;
+  if ($("manager-reserved-count")) $("manager-reserved-count").textContent = reserved;
+  if ($("manager-paid-count")) $("manager-paid-count").textContent = paid;
+  if ($("manager-total-count")) $("manager-total-count").textContent = reserved + paid;
+
+  if (!entries.length) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 5;
+    td.textContent = allEntries.length
+      ? "Nenhum registro corresponde ao filtro."
+      : "Nenhuma reserva ou pagamento registrado no Firebase.";
+    tr.append(td);
+    tbody.append(tr);
+    return;
+  }
+
+  for (const [key, item] of entries) {
+    const tr = document.createElement("tr");
+    for (const value of [
+      String(key).padStart(3, "0"),
+      item.name || "—",
+      item.phone || "—",
+      statusLabel(item)
+    ]) {
+      const td = document.createElement("td");
+      td.textContent = value;
+      tr.append(td);
     }
-    const actions=document.createElement("td"),wrap=document.createElement("div");wrap.className="action-buttons";
-    if(item.status!=="paid") { const paid=document.createElement("button");paid.className="button button-primary";paid.textContent="Confirmar Pix";paid.onclick=()=>managerSetStatus(key,{...item,status:"paid",paidAt:Date.now()});wrap.append(paid); }
-    const release=document.createElement("button");release.className="button button-outline";release.textContent="Liberar";release.onclick=async()=>{if(confirm(`Liberar o número ${key}?`)){try{await remove(ref(db,`numbers/${key}`));selected.delete(Number(key));setMessage(managerMessage,`Número ${key} liberado.`)}catch(e){setMessage(managerMessage,e.message,true)}}};wrap.append(release);
-    actions.append(wrap);tr.append(actions);
+
+    const actions = document.createElement("td");
+    const wrap = document.createElement("div");
+    wrap.className = "action-buttons";
+
+    if (item.status !== "paid") {
+      const paidButton = document.createElement("button");
+      paidButton.type = "button";
+      paidButton.className = "button button-primary";
+      paidButton.textContent = "Confirmar Pix";
+      paidButton.onclick = () => managerSetStatus(key, {
+        ...item, status: "paid", paidAt: Date.now()
+      });
+      wrap.append(paidButton);
+    }
+
+    const release = document.createElement("button");
+    release.type = "button";
+    release.className = "button button-outline";
+    release.textContent = "Liberar número";
+    release.title = "Apaga a reserva do Firebase e deixa o número disponível novamente";
+    release.onclick = async () => {
+      try {
+        ensureManager();
+        if (!confirm(`Deseja liberar o número ${String(key).padStart(3, "0")}? O registro será removido e o número ficará disponível novamente.`)) return;
+        await remove(ref(db, `numbers/${key}`));
+        selected.delete(Number(key));
+        updateSelection();
+        drawNumbers();
+        setMessage(managerMessage, `Número ${String(key).padStart(3, "0")} liberado e disponível novamente.`);
+      } catch (e) {
+        setMessage(managerMessage, `Não foi possível liberar o número ${key}: ${e.message}`, true);
+      }
+    };
+    wrap.append(release);
+    actions.append(wrap);
+    tr.append(actions);
+    tbody.append(tr);
   }
 }
 async function managerSetStatus(key, value) {
@@ -93,7 +165,19 @@ async function boot() {
   }
   try {
     app=initializeApp(firebaseConfig);db=getDatabase(app);auth=getAuth(app);
-    onValue(ref(db,"numbers"),snap=>{numberData=snap.val()||{};initialized=true;for(const n of [...selected])if(numberData[String(n)])selected.delete(n);updateSelection();drawNumbers();},e=>setMessage(formMessage,`Erro ao carregar números: ${e.message}`,true));
+    onValue(ref(db,"numbers"), snap => {
+      numberData = snap.val() || {};
+      initialized = true;
+      for (const n of [...selected]) if (numberData[String(n)]) selected.delete(n);
+      updateSelection();
+      drawNumbers();
+      if (managerUser?.uid === MANAGER_UID) {
+        setMessage(managerMessage, "Dados do Firebase atualizados em tempo real.");
+      }
+    }, e => {
+      setMessage(formMessage, `Erro ao carregar números: ${e.message}`, true);
+      setMessage(managerMessage, `O Firebase recusou a leitura dos números: ${e.message}. Verifique as regras do Realtime Database.`, true);
+    });
     onAuthStateChanged(auth,user=>{
       managerUser=user;
       const allowed=!!user && user.uid===MANAGER_UID && !MANAGER_UID.includes("COLOQUE");
@@ -107,6 +191,8 @@ async function boot() {
   }
 }
 $("search-number").addEventListener("input",drawNumbers);
+$("manager-search")?.addEventListener("input", renderManagerTable);
+$("manager-filter")?.addEventListener("change", renderManagerTable);
 $("clear-selection").addEventListener("click",()=>{selected.clear();updateSelection();drawNumbers();});
 $("reservation-form").addEventListener("submit",async e=>{
   e.preventDefault();
