@@ -1,0 +1,15 @@
+RIFA SOLIDÁRIA MÁRCIA ELIZEU — ATUALIZAÇÃO DOS PRÊMIOS
+
+Alterações nesta versão:
+- 1º prêmio: Gargantilha ouro 18k — valor informado de R$ 2.200,00.
+- 2º prêmio: R$ 500,00 via Pix (mantido).
+- 3º prêmio: 1 pijama americano — valor informado de R$ 250,00.
+- Incluído aviso de que ganhadores que morarem longe poderão optar por receber via Pix o valor correspondente ao 1º ou ao 3º prêmio, em vez do item físico.
+
+PUBLICAÇÃO NO GITHUB PAGES:
+1. Extraia este ZIP.
+2. Envie/substitua index.html e styles.css na raiz do repositório.
+3. Preserve e mantenha os demais arquivos e imagens já existentes no site, incluindo app.js, firebase-config.js, gargantilha.jpg, pijama.jpg e logo-segundo-premio.png.
+4. Faça o commit das alterações e aguarde o GitHub Pages atualizar.
+
+Observação: a opção de Pix foi apresentada como alternativa ao recebimento dos itens físicos para ganhadores de outras localidades. Confirme que os valores e essa condição estão corretos antes de divulgar a rifa.
